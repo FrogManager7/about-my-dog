@@ -340,7 +340,11 @@ nav a:hover {
     nav {
         flex-wrap: wrap;
         justify-content: center;
-        gap: 12px;
+        gap: 8px;
+    }
+
+    nav a {
+        font-size: 13px;
     }
 
     .hero-text h1 {
@@ -390,5 +394,9 @@ nav a:hover {
     .comment-card p {
         font-size: 15px;
         line-height: 1.8;
+    }
+
+    .footer p {
+        line-height: 1.6;
     }
 }
