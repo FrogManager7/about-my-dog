@@ -1,0 +1,480 @@
+/* paddingとborderを、指定した幅に含める */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 32px 16px;
+    font-family: "Zen Maru Gothic", sans-serif;
+    line-height: 1.6;
+    color: #34443b;
+    background-color: #f7f5ed;
+}
+
+/* ゲーム全体を囲むカード */
+.quiz {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 8px 24px rgba(52, 68, 59, 0.08);
+}
+
+h1 {
+    margin: 0 0 24px;
+    font-size: 24px;
+}
+
+.question-number {
+    margin: 0 0 8px;
+    color: #607568;
+    font-weight: bold;
+}
+
+.question {
+    margin: 0 0 12px;
+    font-size: 28px;
+    white-space: pre-line;
+}
+
+/* 3つの選択肢を横並びにする */
+.choices {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+/* 箱のボタン */
+.choice-button {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    padding: 20px 8px;
+    border: 2px solid #c3d8c8;
+    border-radius: 16px;
+
+    font: inherit;
+    font-size: 18px;
+    font-weight: bold;
+    color: #34443b;
+    background-color: #edf5ee;
+    cursor: pointer;
+
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.box-icon {
+    font-size: 48px;
+    line-height: 1.2;
+}
+
+/* マウスを重ねたとき */
+@media (hover: hover) {
+    .choice-button:hover {
+        background-color: #dcecdf;
+        border-color: #739b7f;
+    }
+}
+
+/* キーボードで選んでいるとき */
+.choice-button:focus-visible {
+    outline: 3px solid #477a58;
+    outline-offset: 4px;
+}
+
+/* タップ・クリックしている間 */
+.choice-button:active {
+    background-color: #cbded0;
+}
+
+/* 正解・不正解を表示する場所 */
+.result {
+    min-height:1.6em;
+    margin: 24px 0 0;
+    font-weight: bold;
+}
+
+/* 小さい画面では余白と文字を少し小さくする */
+@media (max-width: 480px) {
+    .quiz {
+        padding: 24px 16px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .question {
+        font-size: 24px;
+    }
+
+    .choices {
+        gap: 8px;
+    }
+
+    .choice-button {
+        padding: 16px 4px;
+        font-size: 16px;
+    }
+
+    .box-icon {
+        font-size: 36px;
+    }
+}
+
+/* 次の問題へ進むボタン */
+.next-button,
+.restart-button {
+    margin-top: 16px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 999px;
+
+    font: inherit;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #477a58;
+    cursor: pointer;
+}
+
+@media (hover: hover){
+    .next-button:hover {
+        background-color: #365e43;
+    }
+}
+
+.next-button:focus-visible {
+    outline: 3px solid #477a58;
+    outline-offset: 4px;
+}
+
+/* JavaScriptの文字列に入れた改行を表示する */
+.choice-button,
+.result {
+  white-space: pre-line;
+}
+
+.bgm-button {
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    border: 1px solid #c3d8c8;
+    border-radius: 999px;
+
+    font: inherit;
+    color: #34443b;
+    background-color: #edf5ee;
+    cursor: pointer;
+}
+
+.bgm-button:focus-visible {
+    outline: 3px solid #477a58;
+    outline-offset: 4px;
+}
+
+.bgm-button[aria-pressed="true"] {
+    color: #ffffff;
+    background-color: #477a58;
+}
+
+/* 紙吹雪 */
+.confetti {
+  position: fixed;
+  top: -20px;
+  left: var(--left);
+  z-index: 1000;
+
+  width: 10px;
+  height: 18px;
+  border-radius: 2px;
+  background-color: var(--color);
+
+  pointer-events: none;
+
+  animation:
+    confetti-fall var(--duration) linear var(--delay) forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform:
+      translateY(0)
+      rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform:
+      translateY(110vh)
+      rotate(var(--rotation));
+    opacity: 0;
+  }
+}
+
+/* クリア時にカードを一度だけ弾ませる */
+.quiz.celebrating {
+  animation: quiz-bounce 0.6s ease;
+}
+
+@keyframes quiz-bounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+/* 動きを減らす設定を使っている人にはアニメーションを表示しない */
+@media (prefers-reduced-motion: reduce) {
+  .confetti,
+  .quiz.celebrating {
+    animation: none;
+  }
+}
+
+.clear-message {
+    margin-top: 24px;
+    padding: 24px 16px;
+    border: 3px solid #e6bb43;
+    border-radius: 20px;
+    background-color: #fff8dc;
+}
+
+.clear-title {
+    margin: 0;
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: 700;
+    color: #805017;
+}
+
+.clear-description {
+    margin: 12px 0 0;
+    font-weight: bold;
+}
+
+/*正解した箱*/
+.choice-button.correct {
+    position: relative;
+    overflow: visible;
+
+    color: #5b4217;
+    border-color: #d6bb43;
+    background-color: #fff4bd;
+
+    animation: correct-flash 0.6s ease;
+}
+
+/*骨が飛び出す動き*/
+.box-icon.treat-pop {
+    animation: treat-pop 0.65s cubic-bezier(0.2, 1.5, 0.5, 1);
+}
+
+/*箱の周りにキラキラを表示*/
+.choice-button.correct::after {
+    content: "✨";
+    position: absolute;
+    top: -18px;
+    right: -8px;
+
+    font-size: 28px;
+    pointer-events: none;
+
+    animation: sparkle-pop 0.8s ease forwards;
+}
+
+@keyframes correct-flash {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.06);
+        box-shadow: 0 0 24px rgba(230, 187, 67, 0.7);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: none;
+    }
+}
+
+@keyframes treat-pop {
+    0% {
+        opacity: 0;
+        transform: translateY(18px) scale(0.3) rotate(-15deg);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(-8px) scale(1.3) rotate(8deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+}
+
+@keyframes sparkle-pop {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.4) rotate(15deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1) rotate(30deg);
+    }
+}
+
+/*正解したボタンは無効後も薄くしない*/
+.choice-button.correct:disabled {
+    opacity: 1;
+}
+
+/*動きを減らす設定への対応*/
+@media (prefers-reduced-motion: reduce) {
+    .choice-button.correct,
+    .box-icon.treat-pop,
+    .choice-button.correct::after {
+        animation: none;
+    }
+}
+
+/*最初の案内画面*/
+.start-screen {
+    width: min(100%, 680px);
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 40px 24px;
+
+    background: white;
+    border-radius: 24px;
+
+    color: #35443b;
+    text-align: center;
+}
+
+.start-screen h1 {
+    margin: 0 0 24px;
+    font-size: clamp(24px, 5vw, 36px);
+}
+
+.start-screen p {
+    margin: 12px 0;
+    line-height: 1.8;
+}
+
+/* 音あり・音なしボタンの並び */
+.start-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+
+    margin-top: 32px;
+}
+
+/* 2つのボタンの共通設定 */
+.start-sound-button,
+.start-silent-button {
+    padding: 14px 24px;
+
+    border: 2px solid #c2dac9;
+    border-radius: 999px;
+
+    background: #edf5ef;
+    color: #35443b;
+
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+/* 音ありボタンを少し強調する */
+.start-sound-button {
+    background: #dceee1;
+    border-color: #9fc5aa;
+}
+
+/* マウスを乗せたとき */
+.start-sound-button:hover,
+.start-silent-button:hover {
+    background: #cce4d3;
+    border-color: #8bb698;
+}
+
+/* キーボードで選んだとき */
+.start-sound-button:focus-visible,
+.start-silent-button:focus-visible {
+    outline: 3px solid #7655dd;
+    outline-offset: 4px;
+}
+
+/* 狭い画面ではボタンを縦に並べる */
+@media (max-width: 480px) {
+    .start-screen {
+        padding: 32px 16px;
+    }
+
+    .start-buttons {
+        flex-direction: column;
+    }
+
+    .start-sound-button,
+    .start-silent-button {
+        width: 100%;
+    }
+
+    .quiz-toolbar {
+        gap: 12px;
+        margin-bottom: 32px;
+    }
+    .back-link {
+        font-size: 14px;
+    }
+}
+
+/* hidden属性がある間は表示しない */
+[hidden] {
+    display: none !important;
+}
+
+.quiz-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.back-link {
+  color:#526c5a;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: #35443b;
+  text-decoration: underline;
+}
+

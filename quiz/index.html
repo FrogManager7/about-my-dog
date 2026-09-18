@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=divice-width", initial-scale="1.0">
+
+        <title>チャコクイズ</title>
+
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <section class="start-screen" aria-labelledby="start-title">
+            <h1 id="start-title">チャコクイズへようこそ！</h1>
+
+            <p>このクイズでは、BGMと正解音が流れます。</p>
+            <p>音の設定は、遊んでいる途中でも変更できます。</p>
+
+            <div class="start-buttons">
+                <button type ="button" class="start-sound-button">
+                     🔊 音ありで遊ぶ
+                </button>
+
+                <button type="button" class="start-silent-button">
+                    🔇 音なしで遊ぶ
+                </button>                
+            </div>
+        </section>
+
+        <main class="quiz" hidden>
+            <div class="quiz-toolbar">
+              <a href="../index.html" class="back-link">
+              ← チャコの紹介へ戻る
+              </a>
+              <button type="button" class="bgm-button" aria-pressed="false">
+                  🔇 音オフ
+              </button>
+            </div>
+            <audio id="clear-bgm" src="audio/chaco-clear-theme.wav" preload="auto"></audio>
+
+            <h1>この子のこと、どれくらいわかるかな？</h1>
+            
+            <p class="question-number">第1問 / 全3問</p>
+
+            <h2 class="question">この子の名前は？</h2>
+            <p>正解だと思う箱を選んでね。</p>
+
+            <div class="choices">
+                <button type="button" class="choice-button" data-answer="チョコ">
+                    <span class="box-icon" aria-hidden="true">📦</span>
+                    <span class="choice-text">チョコ</span>
+                </button>
+
+                <button type="button" class="choice-button" data-answer="チャコ">
+                    <span class="box-icon" aria-hidden="true">📦</span>
+                    <span class="choice-text">チャコ</span>
+                </button>
+
+                <button type="button" class="choice-button" data-answer="チコ">
+                    <span class="box-icon" aria-hidden="true">📦</span>
+                    <span class="choice-text">チコ</span>
+                </button>               
+            </div>
+
+            <p class="result" aria-live="polite"></p>
+
+            <div class="clear-message" role="status" hidden>
+                <p class="clear-title">🎉 全3問クリア! 🎉</p>
+                <p class="clear-description">チャコにおやつを3個あげられたよ!</p>
+            </div>
+
+            <button type="button" class="next-button" hidden>
+                次の問題へ
+            </button>
+
+            <button type="button" class="restart-button" hidden>
+                もう一度遊ぶ
+            </button>
+        </main>
+    </body>
+</html>

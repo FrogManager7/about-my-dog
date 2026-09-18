@@ -303,6 +303,45 @@ nav a:hover {
     font-size: 50px
 }
 
+.quiz-link-area {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 48px;
+}
+
+.quiz-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  width: fit-content;
+  margin: 48px auto 0;
+  padding: 14px 28px;
+
+  border-radius: 999px;
+
+  background-color: #765744;
+  color: #ffffff;
+
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.quiz-link:hover {
+  background-color: #5f4333;
+  transform: translateY(-2px);
+}
+
+.quiz-link:focus-visible {
+  outline: 3px solid #c9a78e;
+  outline-offset: 4px;
+}
+
 @media (max-width: 1270px) {
     .top-wrapper {
       flex-direction: column;
