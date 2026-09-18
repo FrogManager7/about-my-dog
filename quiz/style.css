@@ -429,6 +429,11 @@ h1 {
 
 /* 狭い画面ではボタンを縦に並べる */
 @media (max-width: 480px) {
+
+    .mobile-newline {
+        display: block;
+    }
+    
     .start-screen {
         padding: 32px 16px;
     }
